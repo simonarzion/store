@@ -22,7 +22,7 @@ const ProductContainerStyled = styled.div`
 `;
 
 const ProductCardStyled = styled.div`
-  box-shadow: 0 0 10px #00000029;
+  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2);
   transition: all 0.3s ease;
 
   :hover {

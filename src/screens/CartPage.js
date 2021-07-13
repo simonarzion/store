@@ -1,4 +1,5 @@
 import React from "react";
+import { useEffect } from "react";
 import { ImBin2, ImHome, ImPlus } from "react-icons/im";
 import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
@@ -10,7 +11,7 @@ import { addToCart, deleteFromCart } from "../redux/actions/CartAction";
 const HeaderStyled = styled.header`
   background-color: #ef767a;
   padding: 20px 0;
-  box-shadow: 0px 0px 10px #00000086;
+  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2);
   z-index: 1000;
   width: 100%;
   margin-bottom: 20px;
@@ -45,7 +46,7 @@ const Container = styled.div`
 
 const ProductCardStyled = styled.div`
   margin: 20px auto;
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
   padding: 10px;
   display: flex;
   justify-content: space-between;
@@ -61,7 +62,7 @@ const ProductCardInner = styled.div`
 `;
 
 const ProductImgStyled = styled.img`
-  width: 35px;
+  width: 70px;
   height: 70px;
 `;
 
@@ -94,7 +95,11 @@ const ActionIButton = styled.button`
 const CartPage = () => {
   const dispatch = useDispatch();
   const cart = useSelector((state) => state.cart);
-  const reducedCart = [...new Set(cart)];
+
+  // taken from https://javascript.plainenglish.io/the-easy-way-to-create-a-unique-array-of-json-objects-in-javascript-5634254b17aa
+  const str = [...new Set(cart.map(JSON.stringify))];
+  const obj = str.map(JSON.parse);
+  const reducedCart = obj;
 
   let totalPrice;
 
@@ -138,10 +143,10 @@ const CartPage = () => {
           });
 
           return (
-            <ProductCardStyled>
-              <Link to={`product/${id}`} key={id}>
+            <ProductCardStyled key={id}>
+              <Link to={`product/${id}`}>
                 <ProductCardInner>
-                  <ProductImgStyled style={{ width: "100px" }} src={image} alt={title} />
+                  <ProductImgStyled src={image} alt={title} />
 
                   <ProductContent>
                     <ProductTitle>{title}</ProductTitle>
