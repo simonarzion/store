@@ -1,6 +1,6 @@
 import React from "react";
 import { useEffect } from "react";
-import { ImBin2, ImHome, ImPlus } from "react-icons/im";
+import { ImBin2, ImHome, ImPlus, ImShare } from "react-icons/im";
 import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import styled from "styled-components";
@@ -55,10 +55,19 @@ const ProductCardStyled = styled.div`
 
 const ProductCardInner = styled.div`
   display: flex;
-  justify-content: flex-start;
+  justify-content: space-between;
   align-items: center;
+  width: 100%;
+  margin-left: 20px;
+
+  @media screen and (max-width: 768px) {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+`;
+
+const ProductImgContainer = styled.div`
   flex: 1;
-  gap: 10px;
 `;
 
 const ProductImgStyled = styled.img`
@@ -66,9 +75,7 @@ const ProductImgStyled = styled.img`
   height: 70px;
 `;
 
-const ProductContent = styled.div`
-  width: 100%;
-`;
+const ProductContent = styled.div``;
 
 const ProductTitle = styled.h3``;
 
@@ -81,15 +88,36 @@ const ProductQuantity = styled.div`
 `;
 
 const ProductActions = styled.div`
-  text-align: right;
+  @media screen and (max-width: 768px) {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+  }
 `;
 
 const ActionIButton = styled.button`
   border: none;
   margin: 10px;
+  margin-left: 0;
   cursor: pointer;
   background-color: transparent;
   font-size: 1rem;
+
+  @media screen and (max-width: 768px) {
+    width: 100%;
+    background-color: #ef767a;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 5px 0;
+
+    svg {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+  }
 `;
 
 const CartPage = () => {
@@ -143,27 +171,33 @@ const CartPage = () => {
 
           return (
             <ProductCardStyled key={id}>
-              <Link to={`product/${id}`}>
-                <ProductCardInner>
-                  <ProductImgStyled src={image} alt={title} />
+              <ProductImgContainer>
+                <ProductImgStyled src={image} alt={title} />
+              </ProductImgContainer>
 
-                  <ProductContent>
-                    <ProductTitle>{title}</ProductTitle>
-                    <ProductQuantity>Quantity: {qty.length}</ProductQuantity>
-                    <ProductPrice>${price}</ProductPrice>
-                  </ProductContent>
-                </ProductCardInner>
-              </Link>
+              <ProductCardInner>
+                <ProductContent>
+                  <ProductTitle>{title}</ProductTitle>
+                  <ProductQuantity>Quantity: {qty.length}</ProductQuantity>
+                  <ProductPrice>${price}</ProductPrice>
+                </ProductContent>
 
-              <ProductActions>
-                <ActionIButton onClick={() => dispatch(addToCart(prod))}>
-                  <ImPlus />
-                </ActionIButton>
+                <ProductActions>
+                  <ActionIButton onClick={() => dispatch(addToCart(prod))}>
+                    <ImPlus />
+                  </ActionIButton>
 
-                <ActionIButton onClick={() => handleDeleteProduct(prod)}>
-                  <ImBin2 />
-                </ActionIButton>
-              </ProductActions>
+                  <ActionIButton>
+                    <Link to={`product/${id}`}>
+                      <ImShare />
+                    </Link>
+                  </ActionIButton>
+
+                  <ActionIButton onClick={() => handleDeleteProduct(prod)}>
+                    <ImBin2 />
+                  </ActionIButton>
+                </ProductActions>
+              </ProductCardInner>
             </ProductCardStyled>
           );
         })}
