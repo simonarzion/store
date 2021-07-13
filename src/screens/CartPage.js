@@ -1,6 +1,4 @@
 import React from "react";
-import { useState } from "react";
-import { useEffect } from "react";
 import { ImBin2, ImHome, ImPlus } from "react-icons/im";
 import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
@@ -96,8 +94,7 @@ const ActionIButton = styled.button`
 const CartPage = () => {
   const dispatch = useDispatch();
   const cart = useSelector((state) => state.cart);
-  const [reducedCart, setReducedCart] = useState([]);
-  // const reducedCart = [...new Set(cart)];
+  const reducedCart = [...new Set(cart)];
 
   let totalPrice;
 
@@ -114,15 +111,11 @@ const CartPage = () => {
 
   calculatePrices();
 
-  useEffect(() => {
-    setReducedCart([...new Set(cart)]);
-  }, [cart]);
+  const handleDeleteProduct = (prod) => {
+    const newProducts = cart.filter((product) => prod.title !== product.title);
 
-  // const handleDeleteProduct = (prod) => {
-  //   const newProducts = cart.filter((product) => prod.title !== product.title);
-
-  //   dispatch(deleteFromCart(newProducts));
-  // };
+    dispatch(deleteFromCart(newProducts));
+  };
 
   return (
     <>
@@ -163,9 +156,9 @@ const CartPage = () => {
                   <ImPlus />
                 </ActionIButton>
 
-                {/* <ActionIButton onClick={() => handleDeleteProduct(prod)}>
+                <ActionIButton onClick={() => handleDeleteProduct(prod)}>
                   <ImBin2 />
-                </ActionIButton> */}
+                </ActionIButton>
               </ProductActions>
             </ProductCardStyled>
           );
