@@ -20,7 +20,7 @@ const ProductCardStyled = styled.div`
   justify-content: space-between;
   align-items: stretch;
   gap: 50px;
-  margin: auto;
+  margin: 20px auto;
 
   @media screen and (max-width: 768px) {
     flex-direction: column;

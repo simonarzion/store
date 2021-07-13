@@ -21,6 +21,7 @@ const ProductContainerStyled = styled.div`
   grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
   grid-auto-rows: auto;
   grid-gap: 20px;
+  margin: 20px 0;
 
   &.loading {
     grid-template-columns: 1fr;

@@ -17,8 +17,8 @@ const BouncingLoader = styled.div`
 `;
 
 const BouncingBall = styled.div`
-  width: 15px;
-  height: 15px;
+  width: 18px;
+  height: 18px;
   background-color: #ef767a;
   border-radius: 50%;
   animation: ${BounceAn} 0.6s infinite alternate;
