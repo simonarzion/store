@@ -98,8 +98,7 @@ const CartPage = () => {
 
   // taken from https://javascript.plainenglish.io/the-easy-way-to-create-a-unique-array-of-json-objects-in-javascript-5634254b17aa
   const str = [...new Set(cart.map(JSON.stringify))];
-  const obj = str.map(JSON.parse);
-  const reducedCart = obj;
+  const reducedCart = str.map(JSON.parse);
 
   let totalPrice;
 
