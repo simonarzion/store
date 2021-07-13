@@ -7,6 +7,8 @@ import { Link } from "react-router-dom";
 import { addToCart } from "../redux/actions/CartAction";
 import Header from "../components/Header";
 import styled from "styled-components";
+import { useState } from "react";
+import Loading from "../components/Loading";
 
 const Container = styled.div`
   max-width: 1200px;
@@ -19,6 +21,10 @@ const ProductContainerStyled = styled.div`
   grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
   grid-auto-rows: auto;
   grid-gap: 20px;
+
+  &.loading {
+    grid-template-columns: 1fr;
+  }
 `;
 
 const ProductCardStyled = styled.div`
@@ -33,7 +39,6 @@ const ProductCardStyled = styled.div`
 const ProductImgStyled = styled.img`
   width: 100%;
   height: 250px;
-  object-fit: fill;
 `;
 
 const ProductContent = styled.div`
@@ -80,10 +85,12 @@ const AddToCartBtn = styled.button`
 const HomePage = () => {
   const products = useSelector((state) => state.products.products);
   const dispatch = useDispatch();
+  const [loading, setLoading] = useState(true);
 
   const fetchProducts = async () => {
-    const res = await axios.get("https://fakestoreapi.com/products");
+    const res = await axios.get("https://fakestoreapi.com/products").catch((err) => console.log(err));
     dispatch(setProducts(res.data));
+    setLoading(false);
   };
 
   useEffect(() => {
@@ -94,28 +101,32 @@ const HomePage = () => {
     <>
       <Header />
       <Container>
-        <ProductContainerStyled>
-          {products.map((product) => {
-            const { id, title, price, image, category } = product;
+        <ProductContainerStyled className={loading ? "loading" : ""}>
+          {!loading ? (
+            products.map((product) => {
+              const { id, title, price, image, category } = product;
 
-            return (
-              <ProductCardStyled key={id}>
-                <Link to={`product/${id}`}>
-                  <ProductImgStyled src={image} alt={title} />
+              return (
+                <ProductCardStyled key={id}>
+                  <Link to={`product/${id}`}>
+                    <ProductImgStyled src={image} alt={title} />
 
-                  <ProductContent>
-                    <ProductCategory>{category}</ProductCategory>
-                    <ProductTitleContainer>
-                      <ProductTitle>{title}</ProductTitle>
-                      <ProductPrice>${price}</ProductPrice>
-                    </ProductTitleContainer>
-                  </ProductContent>
-                </Link>
+                    <ProductContent>
+                      <ProductCategory>{category}</ProductCategory>
+                      <ProductTitleContainer>
+                        <ProductTitle>{title}</ProductTitle>
+                        <ProductPrice>${price}</ProductPrice>
+                      </ProductTitleContainer>
+                    </ProductContent>
+                  </Link>
 
-                <AddToCartBtn onClick={() => dispatch(addToCart(product))}>Add To Cart</AddToCartBtn>
-              </ProductCardStyled>
-            );
-          })}
+                  <AddToCartBtn onClick={() => dispatch(addToCart(product))}>Add To Cart</AddToCartBtn>
+                </ProductCardStyled>
+              );
+            })
+          ) : (
+            <Loading />
+          )}
         </ProductContainerStyled>
       </Container>
     </>

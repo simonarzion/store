@@ -6,7 +6,6 @@ import Cart from "./Cart";
 
 const HeaderStyled = styled.header`
   background-color: #ef767a;
-  padding: 20px 0;
   box-shadow: 0px 0px 10px #00000086;
   z-index: 1000;
   width: 100%;
@@ -20,6 +19,7 @@ const HeaderInnerStyled = styled.div`
   justify-content: space-between;
   align-items: center;
   width: 90%;
+  min-height: 10vh;
 `;
 
 const HeaderTitle = styled.h4`

@@ -7,6 +7,7 @@ import { addToCart } from "../redux/actions/CartAction";
 import { removeSelectedProduct, setSelectedProduct } from "../redux/actions/ProductsAction";
 import Header from "../components/Header";
 import styled from "styled-components";
+import Loading from "../components/Loading";
 
 const Container = styled.div`
   max-width: 1200px;
@@ -68,6 +69,7 @@ const ProductDescription = styled.p`
   font-size: 1.2rem;
   font-weight: 300;
   padding: 20px 0;
+  text-transform: capitalize;
 `;
 
 const ProductPage = () => {
@@ -107,7 +109,7 @@ const ProductPage = () => {
             </ProductContent>
           </ProductCardStyled>
         ) : (
-          <div>loading...</div>
+          <Loading />
         )}
       </Container>
     </>
