@@ -2,13 +2,14 @@ import axios from "axios";
 import React from "react";
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { setProducts } from "../redux/actions/ProductsAction";
+import { filterCategory, setProducts } from "../redux/actions/ProductsAction";
 import { Link } from "react-router-dom";
 import { addToCart } from "../redux/actions/CartAction";
 import Header from "../components/Header";
 import styled from "styled-components";
 import { useState } from "react";
 import Loading from "../components/Loading";
+import Filters from "../components/Filters";
 
 const Container = styled.div`
   max-width: 1200px;
@@ -85,26 +86,29 @@ const AddToCartBtn = styled.button`
 
 const HomePage = () => {
   const products = useSelector((state) => state.products.products);
+  const productsFiltered = useSelector((state) => state.productsFiltered.products);
   const dispatch = useDispatch();
   const [loading, setLoading] = useState(true);
 
-  const fetchProducts = async () => {
-    const res = await axios.get("https://fakestoreapi.com/products").catch((err) => console.log(err));
-    dispatch(setProducts(res.data));
-    setLoading(false);
-  };
-
   useEffect(() => {
+    const fetchProducts = async () => {
+      const res = await axios.get("https://fakestoreapi.com/products").catch((err) => console.log(err));
+      dispatch(setProducts(res.data));
+      dispatch(filterCategory(res.data));
+      setLoading(false);
+    };
+
     fetchProducts();
-  }, []);
+  }, [dispatch]);
 
   return (
     <>
       <Header />
       <Container>
+        <Filters />
         <ProductContainerStyled className={loading ? "loading" : ""}>
           {!loading ? (
-            products.map((product) => {
+            productsFiltered.map((product) => {
               const { id, title, price, image, category } = product;
 
               return (

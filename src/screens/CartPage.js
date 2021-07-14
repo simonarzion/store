@@ -1,5 +1,4 @@
 import React from "react";
-import { useEffect } from "react";
 import { ImBin2, ImHome, ImPlus, ImShare } from "react-icons/im";
 import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
@@ -88,6 +87,8 @@ const ProductQuantity = styled.div`
 `;
 
 const ProductActions = styled.div`
+  white-space: nowrap;
+
   @media screen and (max-width: 768px) {
     display: flex;
     justify-content: space-between;

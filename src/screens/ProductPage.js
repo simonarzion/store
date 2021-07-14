@@ -77,17 +77,16 @@ const ProductPage = () => {
   const product = useSelector((state) => state.product.product);
   const dispatch = useDispatch();
 
-  const fetchSelectedProduct = async () => {
-    const res = await axios.get(`https://fakestoreapi.com/products/${productId.id}`);
-    dispatch(setSelectedProduct(res.data));
-  };
-
   useEffect(() => {
+    const fetchSelectedProduct = async () => {
+      const res = await axios.get(`https://fakestoreapi.com/products/${productId.id}`);
+      dispatch(setSelectedProduct(res.data));
+    };
     fetchSelectedProduct();
     return () => {
       dispatch(removeSelectedProduct());
     };
-  }, []);
+  }, [productId, dispatch]);
 
   return (
     <>

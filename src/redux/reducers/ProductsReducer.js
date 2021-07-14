@@ -23,3 +23,14 @@ export const SelectedProductReducer = (state = {}, action) => {
       return state;
   }
 };
+
+export const FilterCategoryReducer = (state = [], action) => {
+  switch (action.type) {
+    case ActionTypes.FILTER_CATEGORY:
+      return { ...state, products: action.payload };
+    case ActionTypes.SORT_PRODUCTS:
+      return { products: action.payload };
+    default:
+      return state;
+  }
+};

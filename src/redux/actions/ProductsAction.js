@@ -19,3 +19,17 @@ export const removeSelectedProduct = () => {
     type: ActionTypes.REMOVE_SELECTED_PRODUCT,
   };
 };
+
+export const filterCategory = (products) => {
+  return {
+    type: ActionTypes.FILTER_CATEGORY,
+    payload: products,
+  };
+};
+
+export const sortProducts = (products) => {
+  return {
+    type: ActionTypes.SORT_PRODUCTS,
+    payload: products,
+  };
+};
