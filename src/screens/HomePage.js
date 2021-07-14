@@ -85,7 +85,6 @@ const AddToCartBtn = styled.button`
 `;
 
 const HomePage = () => {
-  const products = useSelector((state) => state.products.products);
   const productsFiltered = useSelector((state) => state.productsFiltered.products);
   const dispatch = useDispatch();
   const [loading, setLoading] = useState(true);
