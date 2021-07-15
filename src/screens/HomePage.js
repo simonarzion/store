@@ -2,7 +2,7 @@ import axios from "axios";
 import React from "react";
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { filterCategory, setProducts } from "../redux/actions/ProductsAction";
+import { filterCategory, setProducts, sortProducts } from "../redux/actions/ProductsAction";
 import { Link } from "react-router-dom";
 import { addToCart } from "../redux/actions/CartAction";
 import Header from "../components/Header";
@@ -105,6 +105,7 @@ const HomePage = () => {
       <Header />
       <Container>
         <Filters />
+
         <ProductContainerStyled className={loading ? "loading" : ""}>
           {!loading ? (
             productsFiltered.map((product) => {
